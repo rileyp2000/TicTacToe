@@ -193,20 +193,27 @@ def chooseGame(num):
     elif num == 2:
         playMultiPlayer(num)
     elif num == 0:
-        print("This isnt War Games anymore... Beginning Thermonuclear Warfare\n\t-WOPR".upper())
+        print("WOPR 3.1.5")
+        print("I've learned since last time... this isnt a War Game anymore\nBeginning Thermonuclear Warfare Protocol 32.5B\n".upper())
         time.sleep(1)
         for x in range(0,8):
             print()
-            print(''.join(random.choices(string.ascii_uppercase + string.digits, k=)))
+            print(''.join(random.choices(string.ascii_uppercase + string.digits, k=10)))
+            time.sleep(.90)
+        n1 = ''.join(random.choices(string.ascii_uppercase + string.digits, k=10))
+        print("\n" + n1)
+        time.sleep(.90)
+        for y in range(0,2):
+            print(n1)
             time.sleep(.90)
         print("\nCORRECT LAUNCH CODE FOUND\nBEGINNING LAUNCH SEQUENCE")
-        time.sleep(1)
+        time.sleep(1.5)
         print("3")
-        time.sleep(1)
+        time.sleep(1.5)
         print("2")
-        time.sleep(1)
+        time.sleep(1.5)
         print("1")
-        time.sleep(1)
+        time.sleep(1.5)
         sys.exit()
     else:
         print("Invalid number of players")
