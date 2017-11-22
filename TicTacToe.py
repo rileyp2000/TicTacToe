@@ -195,8 +195,10 @@ def chooseGame(num):
     elif num == 0:
         print("This isnt War Games anymore... Beginning Thermonuclear Warfare\n\t-WOPR".upper())
         time.sleep(1)
-        for x in range(0,250):
-            print(''.join(random.choices(string.ascii_uppercase + string.digits, k=20)))
+        for x in range(0,8):
+            print()
+            print(''.join(random.choices(string.ascii_uppercase + string.digits, k=)))
+            time.sleep(.90)
         print("\nCORRECT LAUNCH CODE FOUND\nBEGINNING LAUNCH SEQUENCE")
         time.sleep(1)
         print("3")
