@@ -109,18 +109,21 @@ initBoardPrint()
 
 
 while True:
-    os.system('cls')
+    os.system('clear')
     printBoard()
     
     if checkTie() == True:
         print("Sorry, you tied!")
+        time.sleep(2)
         sys.exit()
     elif checkPlayerWin() == True:
         print("Congradulations, You beat a bot playing random spots!" +
               " You should be very proud!")
+        time.sleep(2)
         sys.exit()
     elif checkCompWin() == True:
         print("WOW, you lost to a bot playing random spots. Be better dude...")
+        time.sleep(2)
         sys.exit()
         
     choice = input("Please choose an empty space to put your X: ")
