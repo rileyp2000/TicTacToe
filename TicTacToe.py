@@ -1,6 +1,7 @@
 #This will be a calc
 import sys
 import time
+import os
 from random import randint
 
 board = ["1","2","3","4","5","6","7","8","9"]
@@ -55,49 +56,49 @@ def checkTie():
 
 
 def checkPlayerWin():
-    if board[0] and board[1] and board[2] == "X":
+    if board[0] == "X" and board[1] == "X" and board[2] == "X":
         return True
-    if board[3] and board[4] and board[5] == "X":
+    elif board[3] == "X" and board[4] == "X" and board[5] == "X":
         return True
-    if board[6] and board[7] and board[8] == "X":
-        return True
-
-    if board[0] and board[3] and board[6] == "X":
-        return True
-    if board[1] and board[4] and board[7] == "X":
-        return True
-    if board[2] and board[5] and board[8] == "X":
+    elif board[6] == "X" and board[7] == "X" and board[8] == "X":
         return True
 
-    if board[0] and board[4] and board[8] == "X":
+    elif board[0] == "X" and board[3] == "X" and board[6] == "X":
         return True
-    if board[6] and board[4] and board[2] == "X":
+    elif board[1] == "X" and board[4] == "X" and board[7] == "X":
+        return True
+    elif board[2] == "X" and board[5] == "X" and board[8] == "X":
+        return True
+
+    elif board[0] == "X" and board[4] == "X" and board[8] == "X":
+        return True
+    elif board[6] == "X" and board[4] == "X" and board[2] == "X":
         return True
 
     return False
 
 
 def checkCompWin():
-    if (board[0] and board[1] and board[2]) == "O":
+    if (board[0] == "X" and board[1] == "X" and board[2]) == "O":
         return True
-    if (board[3] and board[4] and board[5]) == "O":
+    elif (board[3] == "X" and board[4] == "X" and board[5]) == "O":
         return True
-    if (board[6] and board[7] and board[8]) == "O":
-        return True
-
-    if (board[0] and board[3] and board[6]) == "O":
-        return True
-    if (board[1] and board[4] and board[7]) == "O":
-        return True
-    if (board[2] and board[5] and board[8]) == "O":
+    elif (board[6] == "X" and board[7] == "X" and board[8]) == "O":
         return True
 
-    if (board[0] and board[4] and board[8]) == "O":
+    elif (board[0] == "X" and board[3] == "X" and board[6]) == "O":
         return True
-    if (board[6] and board[4] and board[2]) == "O":
+    elif (board[1] == "X" and board[4] == "X" and board[7]) == "O":
+        return True
+    elif (board[2] == "X" and board[5] == "X" and board[8]) == "O":
         return True
 
-    return False
+    elif (board[0] == "X" and board[4] == "X" and board[8]) == "O":
+        return True
+    elif (board[6] == "X" and board[4] == "X" and board[2]) == "O":
+        return True
+    else:
+        return False
 
     
 
@@ -108,16 +109,17 @@ initBoardPrint()
 
 
 while True:
+    os.system('cls')
     printBoard()
     
     if checkTie() == True:
         print("Sorry, you tied!")
         sys.exit()
-    if checkPlayerWin() == True:
+    elif checkPlayerWin() == True:
         print("Congradulations, You beat a bot playing random spots!" +
               " You should be very proud!")
         sys.exit()
-    if checkCompWin() == True:
+    elif checkCompWin() == True:
         print("WOW, you lost to a bot playing random spots. Be better dude...")
         sys.exit()
         
