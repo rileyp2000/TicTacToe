@@ -2,7 +2,8 @@
 import sys
 import time
 import os
-from random import randint
+import string
+import random
 
 board = ["1","2","3","4","5","6","7","8","9"]
 isPlaceable = [True,True,True,True,True,True,True,True,True]
@@ -19,7 +20,7 @@ def initBoardPrint():
     print( "     |     |     ")
     print( "  7  |  8  |  9  ")
     print( "     |     |     ")
-    print("\n\n\nReady to Begin?")
+    print("\n\nReady to Begin?")
 
     
 def printBoard():
@@ -46,6 +47,31 @@ def computerTurn():
     isPlaceable[spaceToGo] == False
 
 
+
+def checkGameStop(num):
+    if checkTie() == True:
+        print("Sorry, you tied!")
+        time.sleep(2)
+        sys.exit()
+    elif checkPlayerWin() == True and num == 1:
+        print("Congradulations, You beat a bot playing random spots!" +
+              " You should be very proud!")
+        time.sleep(2)
+        sys.exit()
+    elif checkCompWin() == True and num == 1:
+        print("WOW, you lost to a bot playing random spots. Be better dude...")
+        time.sleep(2)
+        sys.exit()
+    elif checkPlayerWin() == True and num == 2:
+        print("Congradulations, You beat player 2!" +
+              " You should be very proud!")
+        time.sleep(2)
+        sys.exit()
+    elif checkCompWin() == True and num == 2:
+        print("WOW, you beat player 1! Congrats!")
+        time.sleep(2)
+        sys.exit()
+        
 
 def checkTie():
     for openSpace in isPlaceable:
@@ -100,44 +126,97 @@ def checkCompWin():
     else:
         return False
 
+              
+def playSinglePlayer(num):
+    while True:
+        #os.system('clear')
+        printBoard()
     
+        checkGameStop(num)
+        
+        choice = input("Please choose an empty space to put your X: ")
+        if choice != "":
+            choice = int(choice)-1
+            if isPlaceable[choice] == True:
+                board[choice] = "X"
+                isPlaceable[choice] = False
+                computerTurn()
+            else:
+                print("Invalid Placement, please choose again!")
+                time.sleep(1)
+        else:
+            print("You need to put in a spot dummy")
+            time.sleep(2)
 
 
-
-print("Welcome to Tic-Tac-Toe! \nA Game by Patrick Riley\nNovember 2017\nn")
-initBoardPrint()
-
-
-while True:
-    os.system('clear')
-    printBoard()
+def playMultiPlayer(num):
+    while True:
+        #os.system('clear')
+        printBoard()
     
-    if checkTie() == True:
-        print("Sorry, you tied!")
-        time.sleep(2)
-        sys.exit()
-    elif checkPlayerWin() == True:
-        print("Congradulations, You beat a bot playing random spots!" +
-              " You should be very proud!")
-        time.sleep(2)
-        sys.exit()
-    elif checkCompWin() == True:
-        print("WOW, you lost to a bot playing random spots. Be better dude...")
-        time.sleep(2)
-        sys.exit()
+        checkGameStop(num)
         
-    choice = input("Please choose an empty space to put your X: ")
+        choice = input("Please choose an empty space to put your X: ")
+        if choice != "":
+            choice = int(choice)-1
+            if isPlaceable[choice] == True:
+                board[choice] = "X"
+                isPlaceable[choice] = False
+            else:
+                print("Invalid Placement, please choose again!")
+                time.sleep(1)
+        else:
+            print("You need to put in a spot dummy")
+            time.sleep(2)
 
-    if choice != "":
-        choice = int(choice)-1
-    else:
-        print("You need to put in a spot dummy")
-        sys.exit()
+        checkGameStop(num)
+        printBoard()
+
+        choice = input("Please choose an empty space to put your O: ")
+        if choice != "":
+            choice = int(choice)-1
+            if isPlaceable[choice] == True:
+                board[choice] = "O"
+                isPlaceable[choice] = False
+            else:
+                print("Invalid Placement, please choose again!")
+                time.sleep(1)
+        else:
+            print("You need to put in a spot dummy")
+            time.sleep(2)
+
+
         
-    if isPlaceable[choice] == True:
-        board[choice] = "X"
-        isPlaceable[choice] = False
-        computerTurn()
-    else:
-        print("Invalid Placement, please choose again!")
+def chooseGame(num):
+    if num == 1:
+        playSinglePlayer(num)
+    elif num == 2:
+        playMultiPlayer(num)
+    elif num == 0:
+        print("This isnt War Games anymore... Beginning Thermonuclear Warfare\n\t-WOPR".upper())
         time.sleep(1)
+        for x in range(0,250):
+            print(''.join(random.choices(string.ascii_uppercase + string.digits, k=20)))
+        print("\nCORRECT LAUNCH CODE FOUND\nBEGINNING LAUNCH SEQUENCE")
+        time.sleep(1)
+        print("3")
+        time.sleep(1)
+        print("2")
+        time.sleep(1)
+        print("1")
+        time.sleep(1)
+        sys.exit()
+    else:
+        print("Invalid number of players")
+        sys.exit()     
+
+
+print("Welcome to Tic-Tac-Toe! \nA Game by Patrick Riley\nNovember 2017\n")
+initBoardPrint()
+numPlay = int(input("Enter the Number of players: "))
+chooseGame(numPlay)
+
+
+
+
+
