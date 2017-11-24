@@ -4,6 +4,7 @@ import time
 import os
 import string
 import random
+from random import randint
 
 board = ["1","2","3","4","5","6","7","8","9"]
 isPlaceable = [True,True,True,True,True,True,True,True,True]
@@ -37,14 +38,6 @@ def printBoard():
     print( "  " + board[6]+"  |  "+board[7]+"  |  "+board[8]+"  ")
     print( "     |     |     ")
 
-
-
-def computerTurn():
-    spaceToGo = randint(0,8)
-    while isPlaceable[spaceToGo] == False:
-        spaceToGo = randint(0,8)
-    board[spaceToGo] = "O"
-    isPlaceable[spaceToGo] == False
 
 
 
@@ -126,6 +119,70 @@ def checkCompWin():
     else:
         return False
 
+
+
+
+def computerTurn():
+    if int(compCheckThreat()) != -1 and isPlaceable[int(compCheckThreat())] != False:
+        board[compCheckThreat()] = "O"
+        isPlaceable[compCheckThreat()] = False
+    else:    
+        spaceToGo = randint(0,8)    
+        while isPlaceable[spaceToGo] == False:
+            spaceToGo = randint(0,8)
+        board[spaceToGo] = "O"
+        isPlaceable[spaceToGo] == False
+
+
+def compCheckThreat():
+    #all possible win configs
+    row0= [board[0],board[1],board[2]]
+    row1= [board[3],board[4],board[5]]
+    row2= [board[6],board[7],board[8]]
+    col0= [board[0],board[3],board[6]]
+    col1= [board[1],board[4],board[7]]
+    col2= [board[2],board[5],board[8]]
+    diag0= [board[0],board[4],board[7]]
+    diag1= [board[6],board[4],board[2]]
+
+    allPos = [row0, row1, row2, col0, col1, col2, diag0, diag1]
+
+    for possible in allPos:
+        if checkThreat(possible) != -1:
+            return checkThreat(possible)
+        else:
+            return -1
+
+def checkThreat(posWin):
+    count = 0
+    cO = 0
+    for x in posWin:
+        if x == "X":
+            count = count + 1
+        elif x == "O":
+            cO = cO + 1
+    if count == 2 and cO != 1:
+        for x in posWin:
+            if x != "X":
+                return x
+    else:
+        return -1
+
+    
+def playSelf():
+    while checkTie() == False:
+        space = randint(0,8)
+        while isPlaceable[space] == False:
+            space = randint(0,8)
+        board[space] = "X"
+        isPlaceable[space] == False
+
+        spaceToGo = randint(0,8)
+        while isPlaceable[spaceToGo] == False:
+            spaceToGo = randint(0,8)
+        board[spaceToGo] = "O"
+        isPlaceable[spaceToGo] == False
+
               
 def playSinglePlayer(num):
     while True:
@@ -185,7 +242,6 @@ def playMultiPlayer(num):
             print("You need to put in a spot dummy")
             time.sleep(2)
 
-
         
 def chooseGame(num):
     if num == 1:
@@ -193,8 +249,9 @@ def chooseGame(num):
     elif num == 2:
         playMultiPlayer(num)
     elif num == 0:
+        #playSelf()
         print("WOPR 3.1.5")
-        print("I've learned since last time... this isnt a War Game anymore\nBeginning Thermonuclear Warfare Protocol 32.5B\n".upper())
+        print("I've learned since last time... this isnt a War Game anymore\nBeginning Thermonuclear Warfare Protocol 32B\n".upper())
         time.sleep(1)
         for x in range(0,8):
             print()
