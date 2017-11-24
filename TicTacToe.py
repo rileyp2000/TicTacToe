@@ -123,9 +123,18 @@ def checkCompWin():
 
 
 def computerTurn():
-    if int(compCheckThreat()) != -1 and isPlaceable[int(compCheckThreat())] != False:
-        board[compCheckThreat()] = "O"
-        isPlaceable[compCheckThreat()] = False
+
+    compCheck = compCheckWin()
+    
+    if compCheck != -1 and isPlaceable[compCheck] != False:
+        board[compCheck] = "O"
+        isPlaceable[compCheck] = False
+        
+    compCheck = compCheckThreat()
+    
+    if compCheck != -1 and isPlaceable[compCheck] != False:
+        board[compCheck] = "O"
+        isPlaceable[compCheck] = False  
     else:    
         spaceToGo = randint(0,8)    
         while isPlaceable[spaceToGo] == False:
@@ -135,6 +144,7 @@ def computerTurn():
 
 
 def compCheckThreat():
+    whichSol = 0
     #all possible win configs
     row0= [board[0],board[1],board[2]]
     row1= [board[3],board[4],board[5]]
@@ -142,31 +152,120 @@ def compCheckThreat():
     col0= [board[0],board[3],board[6]]
     col1= [board[1],board[4],board[7]]
     col2= [board[2],board[5],board[8]]
-    diag0= [board[0],board[4],board[7]]
+    diag0= [board[0],board[4],board[8]]
     diag1= [board[6],board[4],board[2]]
 
     allPos = [row0, row1, row2, col0, col1, col2, diag0, diag1]
-
+    indInSol = 0
+    isThreat = False
+    
     for possible in allPos:
         if checkThreat(possible) != -1:
-            return checkThreat(possible)
-        else:
-            return -1
+            indInSol = int(checkThreat(possible))
+            isThreat = True
+            break
+        whichSol = whichSol + 1
+
+    if isThreat == True:
+        if whichSol == 0:
+            return indInSol
+        elif whichSol == 1:
+            return indInSol + 3
+        elif whichSol == 2:
+            return indInSol + 6
+        elif whichSol == 3:
+            return indInSol * 3
+        elif whichSol == 4:
+            return (indInSol * 3) + 1
+        elif whichSol == 5:
+            return (indInSol *3) + 2
+        elif whichSol == 6:
+            return indInSol * 4
+        elif whichSol == 7:
+            return 6 - (indInSol * 2)
+    else:
+        return -1
 
 def checkThreat(posWin):
     count = 0
     cO = 0
+    index = 0
     for x in posWin:
         if x == "X":
             count = count + 1
         elif x == "O":
             cO = cO + 1
-    if count == 2 and cO != 1:
+    if count == 2 and cO == 0:
         for x in posWin:
             if x != "X":
-                return x
+                return index
+            index = index + 1
     else:
         return -1
+
+def compCheckWin():
+    whichSol = 0
+    #all possible win configs
+    row0= [board[0],board[1],board[2]]
+    row1= [board[3],board[4],board[5]]
+    row2= [board[6],board[7],board[8]]
+    col0= [board[0],board[3],board[6]]
+    col1= [board[1],board[4],board[7]]
+    col2= [board[2],board[5],board[8]]
+    diag0= [board[0],board[4],board[8]]
+    diag1= [board[6],board[4],board[2]]
+
+    allPos = [row0, row1, row2, col0, col1, col2, diag0, diag1]
+    indInSol = 0
+    isThreat = False
+    
+    for possible in allPos:
+        if checkToWin(possible) != -1:
+            indInSol = int(checkToWin(possible))
+            isThreat = True
+            break
+        whichSol = whichSol + 1
+
+    if isThreat == True:
+        if whichSol == 0:
+            return indInSol
+        elif whichSol == 1:
+            return indInSol + 3
+        elif whichSol == 2:
+            return indInSol + 6
+        elif whichSol == 3:
+            return indInSol * 3
+        elif whichSol == 4:
+            return (indInSol * 3) + 1
+        elif whichSol == 5:
+            return (indInSol *3) + 2
+        elif whichSol == 6:
+            return indInSol * 4
+        elif whichSol == 7:
+            return 6 - (indInSol * 2)
+    else:
+        return -1
+
+def checkToWin(posWin):
+    count = 0
+    cO = 0
+    index = 0
+    for x in posWin:
+        if x == "O":
+            count = count + 1
+        elif x == "X":
+            cO = cO + 1
+    if count == 2 and cO == 0:
+        for x in posWin:
+            if x != "O":
+                return index
+            index = index + 1
+    else:
+        return -1
+
+
+
+
 
     
 def playSelf():
