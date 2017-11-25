@@ -5,6 +5,7 @@ import os
 import string
 import random
 from random import randint
+import webbrowser
 
 board = ["1","2","3","4","5","6","7","8","9"]
 isPlaceable = [True,True,True,True,True,True,True,True,True]
@@ -123,6 +124,7 @@ def checkCompWin():
 
 
 def computerTurn():
+
 
     compCheck = compCheckWin()
     
@@ -370,6 +372,7 @@ def chooseGame(num):
         time.sleep(1.5)
         print("1")
         time.sleep(1.5)
+        webbrowser.open_new("http://bestanimations.com/Military/Explosions/nuclear-atom-bomg-explosion-animated-gif-5.gif")
         sys.exit()
     else:
         print("Invalid number of players")
